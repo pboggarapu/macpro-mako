@@ -229,55 +229,46 @@ export const zUpdateIdSchema = z
     ),
   );
 
-// this code is a solution that solves a problem we are having with TE forms
-// it comes from the following source (view that form more information)
-// https://github.com/colinhacks/zod/issues/479
-export function zodAlwaysRefine<T extends z.ZodTypeAny>(zodType: T) {
+// zodAlways: A single function to handle both independent and dependent refinements
+export function zodAlways<T extends z.ZodTypeAny>(
+  schema: T,
+  independent: Record<
+    string,
+    (value: any, ctx: z.RefinementCtx) => Promise<void>
+  >,
+  dependent: Record<
+    string,
+    {
+      dependencies: string[];
+      refine: (value: any, ctx: z.RefinementCtx) => Promise<void>;
+    }
+  >,
+) {
   return z.any().superRefine(async (value, ctx) => {
-    const res = await zodType.safeParseAsync(value);
+    // First, validate the schema
+    const res = await schema.safeParseAsync(value);
 
-    // If validation fails, add issues to the context
     if (!res.success) {
       for (const issue of res.error.issues) {
         ctx.addIssue(issue);
       }
     }
 
-    // Check if id and waiverNumber exist, then perform specific refinement
-    if (value.id && value.waiverNumber) {
-      // Perform the refinement logic manually
-      const waiverNumberPrefix = value.waiverNumber.substring(
-        0,
-        value.waiverNumber.lastIndexOf("."),
+    // Apply independent refinements
+    for (const [field, refine] of Object.entries(independent)) {
+      if (value[field] !== undefined) {
+        await refine(value, ctx);
+      }
+    }
+
+    // Apply dependent refinements
+    for (const [field, { dependencies, refine }] of Object.entries(dependent)) {
+      const allDependenciesExist = dependencies.every(
+        (dep) => value[dep] !== undefined,
       );
-      const idPrefix = value.id.substring(0, value.id.lastIndexOf("."));
 
-      if (waiverNumberPrefix !== idPrefix) {
-        ctx.addIssue({
-          path: ["id"],
-          code: z.ZodIssueCode.custom,
-          message:
-            "The Approved Initial or Renewal Waiver Number and the Temporary Extension Request Number must be identical until the last period.",
-        });
-      }
-
-      // Add your existing async checks for itemExists and idIsApproved here
-      if (!(await itemExists(value.id))) {
-        ctx.addIssue({
-          path: ["id"],
-          code: z.ZodIssueCode.custom,
-          message:
-            "According to our records, this Temporary Extension Request Number already exists.",
-        });
-      }
-
-      if (!(await idIsApproved(value.waiverNumber))) {
-        ctx.addIssue({
-          path: ["waiverNumber"],
-          code: z.ZodIssueCode.custom,
-          message:
-            "According to our records, this Approved Initial or Renewal Waiver Number is not approved.",
-        });
+      if (allDependenciesExist || dependencies.length === 0) {
+        await refine(value, ctx);
       }
     }
   }) as unknown as T;

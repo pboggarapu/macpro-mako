@@ -26,7 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { SlotAdditionalInfo } from "@/features";
-import { getFormOrigin, zodAlwaysRefine } from "@/utils";
+import { getFormOrigin, zodAlways } from "@/utils";
 import {
   CheckDocumentFunction,
   documentPoller,
@@ -77,6 +77,8 @@ type ActionFormProps<Schema extends SchemaWithEnforcableProps> = {
     documentChecker: CheckDocumentFunction;
   };
   tab: "spas" | "waivers";
+  independentRefinements: any;
+  dependentRefinements: any;
 };
 
 export const ActionForm = <Schema extends SchemaWithEnforcableProps>({
@@ -101,13 +103,17 @@ export const ActionForm = <Schema extends SchemaWithEnforcableProps>({
   documentPollerArgs,
   attachments,
   tab,
+  independentRefinements,
+  dependentRefinements,
 }: ActionFormProps<Schema>) => {
   const { id, authority } = useParams<{ id: string; authority: Authority }>();
   const location = useLocation();
   const navigate = useNavigate();
 
   const form = useForm<z.TypeOf<Schema>>({
-    resolver: zodResolver(zodAlwaysRefine(schema)),
+    resolver: zodResolver(
+      zodAlways(schema, independentRefinements, dependentRefinements),
+    ),
     mode: "onChange",
     defaultValues: {
       ...defaultValues,

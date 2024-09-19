@@ -17,11 +17,17 @@ import {
 } from "@/components";
 import { Link } from "react-router-dom";
 import { formSchemas } from "@/formSchemas";
+import {
+  independentRefinements,
+  dependentRefinements,
+} from "@/formSchemas/temporary-extension";
 
 export const TemporaryExtensionForm = () => (
   <ActionForm
     schema={formSchemas["temporary-extension"]}
     title="Temporary Extension Request Details"
+    independentRefinements={independentRefinements}
+    dependentRefinements={dependentRefinements}
     fields={(form) => (
       <>
         <FormField
