@@ -236,9 +236,49 @@ export function zodAlwaysRefine<T extends z.ZodTypeAny>(zodType: T) {
   return z.any().superRefine(async (value, ctx) => {
     const res = await zodType.safeParseAsync(value);
 
-    if (res.success === false)
+    // If validation fails, add issues to the context
+    if (!res.success) {
       for (const issue of res.error.issues) {
         ctx.addIssue(issue);
       }
+    }
+
+    // Check if id and waiverNumber exist, then perform specific refinement
+    if (value.id && value.waiverNumber) {
+      // Perform the refinement logic manually
+      const waiverNumberPrefix = value.waiverNumber.substring(
+        0,
+        value.waiverNumber.lastIndexOf("."),
+      );
+      const idPrefix = value.id.substring(0, value.id.lastIndexOf("."));
+
+      if (waiverNumberPrefix !== idPrefix) {
+        ctx.addIssue({
+          path: ["id"],
+          code: z.ZodIssueCode.custom,
+          message:
+            "The Approved Initial or Renewal Waiver Number and the Temporary Extension Request Number must be identical until the last period.",
+        });
+      }
+
+      // Add your existing async checks for itemExists and idIsApproved here
+      if (!(await itemExists(value.id))) {
+        ctx.addIssue({
+          path: ["id"],
+          code: z.ZodIssueCode.custom,
+          message:
+            "According to our records, this Temporary Extension Request Number already exists.",
+        });
+      }
+
+      if (!(await idIsApproved(value.waiverNumber))) {
+        ctx.addIssue({
+          path: ["waiverNumber"],
+          code: z.ZodIssueCode.custom,
+          message:
+            "According to our records, this Approved Initial or Renewal Waiver Number is not approved.",
+        });
+      }
+    }
   }) as unknown as T;
 }

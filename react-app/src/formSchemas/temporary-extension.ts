@@ -24,41 +24,41 @@ export const formSchema = events["temporary-extension"].baseSchema
           "According to our records, this Approved Initial or Renewal Waiver Number is not approved. You must supply an approved Initial or Renewal Waiver Number.",
       }),
   })
-  .superRefine(async (data, ctx) => {
-    // Check that the authorities match
-    try {
-      const originalWaiverData = await getItem(data.waiverNumber);
-      if (originalWaiverData._source.authority !== data.authority) {
-        ctx.addIssue({
-          message:
-            "The selected Temporary Extension Type does not match the Approved Initial or Renewal Waiver's type.",
-          code: z.ZodIssueCode.custom,
-          fatal: true,
-          path: ["authority"],
-        });
-      }
-
-      // Check that the original waiver and temp extension have the same id up to the last period
+  .refine(
+    (data) => {
       const waiverNumberPrefix = data.waiverNumber.substring(
         0,
         data.waiverNumber.lastIndexOf("."),
       );
       const idPrefix = data.id.substring(0, data.id.lastIndexOf("."));
-      if (waiverNumberPrefix !== idPrefix) {
-        ctx.addIssue({
-          message:
-            "The Approved Initial or Renewal Waiver Number and the Temporary Extension Request Number must be identical until the last period.",
-          code: z.ZodIssueCode.custom,
-          fatal: true,
-          path: ["id"],
-        });
-      }
-      return z.never;
-    } catch (error) {
-      // If we've failed here, the item does not exist, and the originalWaiverNumberSchema validation will throw the correct errors.
-      console.error(error);
-      return z.never;
-    }
-  });
+      return waiverNumberPrefix === idPrefix;
+    },
+    {
+      message:
+        "The Approved Initial or Renewal Waiver Number and the Temporary Extension Request Number must be identical until the last period.",
+      path: ["id"],
+    },
+  );
+// .superRefine(async (data, ctx) => {
+//   // Check that the authorities match
+//   try {
+//     const originalWaiverData = await getItem(data.waiverNumber);
+//     if (originalWaiverData._source.authority !== data.authority) {
+//       ctx.addIssue({
+//         message:
+//           "The selected Temporary Extension Type does not match the Approved Initial or Renewal Waiver's type.",
+//         code: z.ZodIssueCode.custom,
+//         fatal: true,
+//         path: ["authority"],
+//       });
+//     }
+
+//     return z.never;
+//   } catch (error) {
+//     // If we've failed here, the item does not exist, and the originalWaiverNumberSchema validation will throw the correct errors.
+//     console.error(error);
+//     return z.never;
+//   }
+// });
 
 // export type Schema = Awaited<ReturnType<typeof transform>>;

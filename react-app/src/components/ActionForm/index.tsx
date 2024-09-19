@@ -26,7 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { SlotAdditionalInfo } from "@/features";
-import { getFormOrigin } from "@/utils";
+import { getFormOrigin, zodAlwaysRefine } from "@/utils";
 import {
   CheckDocumentFunction,
   documentPoller,
@@ -107,7 +107,7 @@ export const ActionForm = <Schema extends SchemaWithEnforcableProps>({
   const navigate = useNavigate();
 
   const form = useForm<z.TypeOf<Schema>>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(zodAlwaysRefine(schema)),
     mode: "onChange",
     defaultValues: {
       ...defaultValues,
