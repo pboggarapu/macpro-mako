@@ -34,8 +34,6 @@ export const baseSchema = z.object({
   }),
 });
 
-export type TemporaryExtensionSchema = z.infer<typeof baseSchema>;
-
 export const schema = baseSchema.extend({
   actionType: z.string().default("Extend"),
   origin: z.literal("mako").default("mako"),

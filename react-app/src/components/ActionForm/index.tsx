@@ -57,17 +57,12 @@ export type SchemaWithEnforcableProps<
   Shape extends z.ZodRawShape = z.ZodRawShape,
 > = z.ZodEffects<EnforceSchemaProps<Shape>> | EnforceSchemaProps<Shape>;
 
-// Utility type to handle Zod schema with or without a transform
-type InferUntransformedSchema<T> = T extends z.ZodEffects<infer U> ? U : T;
-
 type ActionFormProps<Schema extends SchemaWithEnforcableProps> = {
   schema: Schema;
-  defaultValues?: DefaultValues<z.infer<InferUntransformedSchema<Schema>>>; // Adjusted to infer the base schema type
+  defaultValues?: DefaultValues<z.TypeOf<Schema>>;
   title: string;
   fieldsLayout?: (props: { children: ReactNode; title: string }) => ReactNode;
-  fields: (
-    form: UseFormReturn<z.infer<InferUntransformedSchema<Schema>>>,
-  ) => ReactNode; // Adjusted to use the untransformed schema type
+  fields: (form: UseFormReturn<z.TypeOf<Schema>>) => ReactNode;
   bannerPostSubmission?: Omit<Banner, "pathnameToDisplayOn">;
   promptPreSubmission?: Omit<UserPrompt, "onAccept">;
   promptOnLeavingForm?: Omit<UserPrompt, "onAccept">;

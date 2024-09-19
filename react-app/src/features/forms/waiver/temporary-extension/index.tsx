@@ -25,7 +25,7 @@ export const TemporaryExtensionForm = () => (
     fields={(form) => (
       <>
         <FormField
-          name="ids.authority"
+          name="authority"
           control={form.control}
           render={({ field }) => (
             <FormItem className="max-w-xs">
@@ -49,16 +49,11 @@ export const TemporaryExtensionForm = () => (
           )}
         />
         <FormField
-          name="ids.waiverNumber"
+          name="waiverNumber"
           control={form.control}
           render={({ field }) => {
             return (
-              <FormItem
-                className="max-w-md"
-                onChange={async () => {
-                  await form.trigger("ids.authority");
-                }}
-              >
+              <FormItem className="max-w-md">
                 <FormLabel data-testid="waiverNumber-label">
                   <strong className="font-bold">
                     Approved Initial or Renewal Waiver Number
@@ -75,9 +70,10 @@ export const TemporaryExtensionForm = () => (
                     className="max-w-sm"
                     ref={field.ref}
                     value={field.value}
-                    onChange={(e) =>
-                      field.onChange(e.currentTarget.value.toUpperCase())
-                    }
+                    onChange={(e) => {
+                      form.trigger("authority");
+                      field.onChange(e.currentTarget.value.toUpperCase());
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -87,13 +83,9 @@ export const TemporaryExtensionForm = () => (
         />
         <FormField
           control={form.control}
-          name="ids.id"
+          name="id"
           render={({ field }) => (
-            <FormItem
-              onChange={async () => {
-                await form.trigger("ids.authority");
-              }}
-            >
+            <FormItem>
               <FormLabel data-testid="requestNumber-label">
                 <strong className="font-bold">
                   Temporary Extension Request Number
@@ -132,7 +124,7 @@ export const TemporaryExtensionForm = () => (
       faqLink: "/faq/temporary-extensions-b-attachments",
     }}
     documentPollerArgs={{
-      property: (data) => data.id,
+      property: "id",
       documentChecker: (check) => check.recordExists,
     }}
     bannerPostSubmission={{
