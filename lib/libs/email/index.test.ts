@@ -1,8 +1,7 @@
 import { describe, it, expect, beforeEach, vi, Mock } from "vitest";
-import { Action, Attachment, Authority } from "shared-types";
+import { Action, Authority } from "shared-types";
 import { getPackageChangelog } from "../api/package";
 import {
-  formatAttachments,
   formatDate,
   formatNinetyDaysDate,
   getEmailTemplates,
@@ -13,57 +12,6 @@ import {
 vi.mock("../api/package", () => ({
   getPackageChangelog: vi.fn(),
 }));
-
-describe("formatAttachments", () => {
-  it("should return 'no attachments' when attachmentList is null or empty", () => {
-    expect(formatAttachments("text", null)).toBe("no attachments");
-    expect(formatAttachments("text", [])).toBe("no attachments");
-  });
-
-  it("should format attachments as text", () => {
-    const attachments: Attachment[] = [
-      {
-        title: "title1",
-        filename: "file1.txt",
-        bucket: "bucket1",
-        key: "key1",
-        uploadDate: 1628090400000,
-      },
-      {
-        title: "title2",
-        filename: "file2.txt",
-        bucket: "bucket2",
-        key: "key2",
-        uploadDate: 1628186800000,
-      },
-    ];
-    const result = formatAttachments("text", attachments);
-    expect(result).toBe("\n\ntitle1: file1.txt\ntitle2: file2.txt\n\n");
-  });
-
-  it("should format attachments as HTML", () => {
-    const attachments: Attachment[] = [
-      {
-        title: "title1",
-        filename: "file1.txt",
-        bucket: "bucket1",
-        key: "key1",
-        uploadDate: 1628090400000,
-      },
-      {
-        title: "title2",
-        filename: "file2.txt",
-        bucket: "bucket2",
-        key: "key2",
-        uploadDate: 1628186800000,
-      },
-    ];
-    const result = formatAttachments("html", attachments);
-    expect(result).toBe(
-      "<ul><li>title1: file1.txt</li><li>title2: file2.txt</li></ul>",
-    );
-  });
-});
 
 describe("formatDate", () => {
   beforeEach(() => {

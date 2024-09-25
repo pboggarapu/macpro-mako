@@ -14,6 +14,8 @@ export type InjectedConfigProperties = {
   domainName: string;
   emailAddressLookupSecretName: string;
   googleAnalyticsDisable: boolean;
+  emailFromIdentity: string;
+  emailIdentityDomain: string;
   googleAnalyticsGTag: string;
   iamPath: string;
   iamPermissionsBoundary: string;
@@ -34,6 +36,7 @@ export type DeploymentConfigProperties = InjectedConfigProperties & {
   project: string;
   sharedOpenSearchDomainArn: string;
   sharedOpenSearchDomainEndpoint: string;
+
   stage: string;
   terminationProtection: boolean;
 };
@@ -139,6 +142,9 @@ export class DeploymentConfig {
       typeof config.idmHomeUrl === "string" &&
       typeof config.legacyS3AccessRoleArn === "string" &&
       typeof config.useSharedOpenSearch === "boolean" &&
+      typeof config.vpcName === "string" &&
+      typeof config.emailFromIdentity === "string" &&
+      typeof config.emailIdentityDomain === "string" &&
       typeof config.vpcName === "string"
     );
   }

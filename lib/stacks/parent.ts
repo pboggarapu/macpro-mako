@@ -114,6 +114,7 @@ export class ParentStack extends cdk.Stack {
       brokerString: props.brokerString,
       topicNamespace,
       indexNamespace,
+      userPoolId: authStack.userPool.userPoolId,
       lambdaSecurityGroupId:
         networkingStack.lambdaSecurityGroup.securityGroupId,
       applicationEndpointUrl: uiInfraStack.applicationEndpointUrl,
@@ -121,6 +122,8 @@ export class ParentStack extends cdk.Stack {
       lambdaSecurityGroup: networkingStack.lambdaSecurityGroup,
       openSearchDomainEndpoint: dataStack.openSearchDomainEndpoint,
       openSearchDomainArn: dataStack.openSearchDomainArn,
+      emailFromIdentity: props.emailFromIdentity,
+      emailIdentityDomain: props.emailIdentityDomain,
     });
 
     new cdk.aws_ssm.StringParameter(this, "DeploymentOutput", {
