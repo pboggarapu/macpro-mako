@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode development",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
@@ -76,6 +76,9 @@
     "@axe-core/playwright": "^4.8.3",
     "@playwright/test": "^1.45.3",
     "@tailwindcss/typography": "^0.5.10",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.5.1",
     "@types/lodash.debounce": "^4.0.7",
     "@types/node": "^20.4.2",
     "@types/pluralize": "^0.0.33",

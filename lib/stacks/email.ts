@@ -6,6 +6,7 @@ import { ISubnet } from "aws-cdk-lib/aws-ec2";
 import { CfnEventSourceMapping } from "aws-cdk-lib/aws-lambda";
 import * as LC from "local-constructs";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
+import { commonBundlingOptions } from "../config/bundling-config";
 
 interface EmailServiceStackProps extends cdk.StackProps {
   project: string;
@@ -33,7 +34,6 @@ export class Email extends cdk.NestedStack {
     const {
       project,
       stage,
-      isDev,
       stack,
       userPoolId,
       vpc,
@@ -92,7 +92,7 @@ export class Email extends cdk.NestedStack {
     const emailDataBucket = new cdk.aws_s3.Bucket(this, "EmailDataBucket", {
       versioned: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
-      autoDeleteObjects: isDev,
+      autoDeleteObjects: props.isDev,
     });
 
     emailDataBucket.addToResourcePolicy(
@@ -241,6 +241,7 @@ export class Email extends cdk.NestedStack {
           MAX_RETRY_ATTEMPTS: "3", // Set the maximum number of retry attempts
           userPoolId,
         },
+        bundling: commonBundlingOptions,
       },
     );
 
