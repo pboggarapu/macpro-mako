@@ -122,20 +122,6 @@ export const ContactStateLead = (props: { isChip?: boolean }) => {
   );
 };
 
-export const SpamWarning = () => {
-  return (
-    <Section>
-      <br />
-      <p style={{ textAlign: "center" }}>
-        If the contents of this email seem suspicious, do not open them, and
-        instead forward this email to{" "}
-        <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.
-      </p>
-      <p style={{ textAlign: "center" }}>Thank you!</p>
-    </Section>
-  );
-};
-
 export const WithdrawRAI = (props: {
   id: string;
   submitterName: string;

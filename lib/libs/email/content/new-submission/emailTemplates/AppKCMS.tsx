@@ -4,11 +4,7 @@ import { OneMac } from "shared-types/action-types/new-submission";
 import { CommonVariables } from "../../..";
 import { DateTime } from "luxon";
 import { Html, Container } from "@react-email/components";
-import {
-  LoginInstructions,
-  PackageDetails,
-  SpamWarning,
-} from "../../email-components";
+import { LoginInstructions, PackageDetails } from "../../email-components";
 
 // 1915c - app K
 export const AppKCMSEmail = (props: {
@@ -38,7 +34,6 @@ export const AppKCMSEmail = (props: {
           }}
           attachments={variables.attachments}
         />
-        <SpamWarning />
       </Container>
     </Html>
   );

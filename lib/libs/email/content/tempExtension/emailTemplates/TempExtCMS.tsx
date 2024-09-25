@@ -3,11 +3,7 @@ import { emailTemplateValue } from "../../new-submission/data";
 import { OneMac } from "shared-types/action-types/new-submission";
 import { CommonVariables } from "../../..";
 import { Html, Container } from "@react-email/components";
-import {
-  PackageDetails,
-  LoginInstructions,
-  SpamWarning,
-} from "../../email-components";
+import { PackageDetails, LoginInstructions } from "../../email-components";
 
 export const TempExtCMSEmail = (props: {
   variables: OneMac & CommonVariables;
@@ -32,7 +28,6 @@ export const TempExtCMSEmail = (props: {
           }}
           attachments={variables.attachments}
         />
-        <SpamWarning />
       </Container>
     </Html>
   );

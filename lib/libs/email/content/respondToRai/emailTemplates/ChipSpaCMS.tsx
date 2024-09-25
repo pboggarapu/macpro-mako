@@ -3,11 +3,7 @@ import { emailTemplateValue } from "../data";
 import { CommonVariables } from "../../..";
 import { RaiResponse } from "shared-types";
 import { Container, Html } from "@react-email/components";
-import {
-  LoginInstructions,
-  PackageDetails,
-  SpamWarning,
-} from "../../email-components";
+import { LoginInstructions, PackageDetails } from "../../email-components";
 
 export const ChipSpaCMSEmail = (props: {
   variables: RaiResponse & CommonVariables;
@@ -31,7 +27,6 @@ export const ChipSpaCMSEmail = (props: {
           }}
           attachments={variables.attachments}
         />
-        <SpamWarning />
       </Container>
     </Html>
   );

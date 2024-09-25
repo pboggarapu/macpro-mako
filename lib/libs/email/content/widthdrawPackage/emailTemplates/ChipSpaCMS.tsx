@@ -3,7 +3,7 @@ import { emailTemplateValue } from "../data";
 import { CommonVariables } from "../../..";
 import { WithdrawPackage } from "shared-types";
 import { Html, Container } from "@react-email/components";
-import { PackageDetails, SpamWarning } from "../../email-components";
+import { PackageDetails } from "../../email-components";
 
 // **** CHIP SPA
 export const ChipSpaCMSEmail = (props: {
@@ -27,7 +27,6 @@ export const ChipSpaCMSEmail = (props: {
             Summary: variables.additionalInformation,
           }}
         />
-        <SpamWarning />
       </Container>
     </Html>
   );

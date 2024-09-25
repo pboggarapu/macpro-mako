@@ -3,11 +3,7 @@ import { emailTemplateValue } from "../data";
 import { CommonVariables } from "../../..";
 import { RaiResponse } from "shared-types";
 import { Html, Container } from "@react-email/components";
-import {
-  PackageDetails,
-  LoginInstructions,
-  SpamWarning,
-} from "../../email-components";
+import { PackageDetails, LoginInstructions } from "../../email-components";
 
 // 1915b
 export const Waiver1915bCMSEmail = (props: {
@@ -32,7 +28,6 @@ export const Waiver1915bCMSEmail = (props: {
           }}
           attachments={variables.attachments}
         />
-        <SpamWarning />
       </Container>
     </Html>
   );

@@ -3,7 +3,7 @@ import { emailTemplateValue } from "../data";
 import { CommonVariables } from "../../..";
 import { WithdrawPackage } from "shared-types";
 import { Html, Container } from "@react-email/components";
-import { PackageDetails, SpamWarning } from "../../email-components";
+import { PackageDetails } from "../../email-components";
 
 export const Waiver1915bCMSEmail = (props: {
   variables: WithdrawPackage & CommonVariables;
@@ -26,7 +26,6 @@ export const Waiver1915bCMSEmail = (props: {
             Summary: variables.additionalInformation,
           }}
         />
-        <SpamWarning />
       </Container>
     </Html>
   );

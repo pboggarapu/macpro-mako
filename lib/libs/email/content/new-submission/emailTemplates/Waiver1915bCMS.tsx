@@ -4,11 +4,7 @@ import { emailTemplateValue } from "../data";
 import { OneMac } from "shared-types/action-types/new-submission";
 import { CommonVariables } from "../../..";
 import { Html, Container } from "@react-email/components";
-import {
-  LoginInstructions,
-  PackageDetails,
-  SpamWarning,
-} from "../../email-components";
+import { LoginInstructions, PackageDetails } from "../../email-components";
 
 export const Waiver1915bCMSEmail = (props: {
   variables: OneMac & CommonVariables;
@@ -36,7 +32,6 @@ export const Waiver1915bCMSEmail = (props: {
           }}
           attachments={variables.attachments}
         />
-        <SpamWarning />
       </Container>
     </Html>
   );

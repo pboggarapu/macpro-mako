@@ -3,11 +3,7 @@ import { emailTemplateValue } from "../data";
 import { OneMac } from "shared-types/action-types/new-submission";
 import { CommonVariables, formatDate } from "../../..";
 import { Html, Container } from "@react-email/components";
-import {
-  LoginInstructions,
-  PackageDetails,
-  SpamWarning,
-} from "../../email-components";
+import { LoginInstructions, PackageDetails } from "../../email-components";
 
 export const MedSpaCMSEmail = (props: {
   variables: OneMac & CommonVariables;
@@ -33,7 +29,6 @@ export const MedSpaCMSEmail = (props: {
           }}
           attachments={variables.attachments}
         />
-        <SpamWarning />
       </Container>
     </Html>
   );

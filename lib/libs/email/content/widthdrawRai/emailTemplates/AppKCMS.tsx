@@ -3,11 +3,7 @@ import { emailTemplateValue } from "../data";
 import { CommonVariables } from "../../..";
 import { RaiWithdraw } from "shared-types";
 import { Html, Container } from "@react-email/components";
-import {
-  WithdrawRAI,
-  PackageDetails,
-  SpamWarning,
-} from "../../email-components";
+import { WithdrawRAI, PackageDetails } from "../../email-components";
 
 export const AppKCMSEmail = (props: {
   variables: RaiWithdraw & CommonVariables;
@@ -28,7 +24,6 @@ export const AppKCMSEmail = (props: {
           }}
           attachments={variables.attachments}
         />
-        <SpamWarning />
       </Container>
     </Html>
   );
