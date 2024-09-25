@@ -37,7 +37,7 @@ describe("handler", () => {
   };
 
   it("should log request and create topics successfully", async () => {
-    (topics.createTopics as vi.Mock).mockResolvedValue(undefined);
+    (topics.createTopics as Mock).mockResolvedValue(undefined);
 
     await handler(event, context);
 

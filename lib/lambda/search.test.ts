@@ -52,8 +52,8 @@ describe("getSearchData Handler", () => {
       },
     };
 
-    (os.search as vi.Mock).mockResolvedValueOnce(mockResults);
-    (getAppkChildren as vi.Mock).mockResolvedValueOnce({
+    (os.search as Mock).mockResolvedValueOnce(mockResults);
+    (getAppkChildren as Mock).mockResolvedValueOnce({
       hits: {
         hits: [{ _id: "2", _source: { child: "child-data" } }],
       },
@@ -93,7 +93,7 @@ describe("getSearchData Handler", () => {
   });
 
   it("should handle errors during processing", async () => {
-    (os.search as vi.Mock).mockRejectedValueOnce(new Error("Test error"));
+    (os.search as Mock).mockRejectedValueOnce(new Error("Test error"));
 
     const event = {
       pathParameters: { index: "main" },

@@ -26,7 +26,7 @@ describe("handler", () => {
   };
 
   it("should log request and delete topics successfully", async () => {
-    (topics.deleteTopics as vi.Mock).mockResolvedValue(undefined);
+    (topics.deleteTopics as Mock).mockResolvedValue(undefined);
 
     await handler(event, context);
 

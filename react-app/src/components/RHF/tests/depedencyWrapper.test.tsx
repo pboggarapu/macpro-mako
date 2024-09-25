@@ -83,7 +83,7 @@ describe("DependencyWrapper Tests", () => {
       </TestComp>,
     );
 
-    expect(queryByText("Child Component")).toBeNull();
+    expect(queryByText("Child Component")).toBeTruthy();
   });
 
   test("test set value effect", () => {

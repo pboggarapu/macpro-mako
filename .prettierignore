@@ -7,5 +7,4 @@ testcafe_results
 .webpack
 tsconfig.tsbuildinfo
 build_run
-**/*.test.{ts,tsx}
 docs/

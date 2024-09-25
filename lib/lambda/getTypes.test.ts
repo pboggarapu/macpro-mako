@@ -31,7 +31,7 @@ describe("getTypes Handler", () => {
   });
 
   it("should return 400 if no types are found", async () => {
-    (os.search as vi.Mock).mockResolvedValueOnce(null);
+    (os.search as Mock).mockResolvedValueOnce(null);
 
     const event = {
       body: JSON.stringify({ authorityId: "test-authority" }),
@@ -47,7 +47,7 @@ describe("getTypes Handler", () => {
 
   it("should return 200 with the result if types are found", async () => {
     const mockResult = { hits: { hits: [{ _source: { name: "test-type" } }] } };
-    (os.search as vi.Mock).mockResolvedValueOnce(mockResult);
+    (os.search as Mock).mockResolvedValueOnce(mockResult);
 
     const event = {
       body: JSON.stringify({ authorityId: "test-authority" }),
@@ -62,7 +62,7 @@ describe("getTypes Handler", () => {
   });
 
   it("should return 500 if an error occurs during processing", async () => {
-    (os.search as vi.Mock).mockRejectedValueOnce(new Error("Test error"));
+    (os.search as Mock).mockRejectedValueOnce(new Error("Test error"));
 
     const event = {
       body: JSON.stringify({ authorityId: "test-authority" }),

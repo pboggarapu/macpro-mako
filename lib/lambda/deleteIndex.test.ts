@@ -19,7 +19,7 @@ describe("Lambda Handler", () => {
       indexNamespace: "test-namespace-",
     };
 
-    (os.deleteIndex as vi.Mock).mockResolvedValueOnce(null);
+    (os.deleteIndex as Mock).mockResolvedValueOnce(null);
 
     await handler(event, null, callback);
 
@@ -58,7 +58,7 @@ describe("Lambda Handler", () => {
       indexNamespace: "test-namespace-",
     };
 
-    (os.deleteIndex as vi.Mock).mockRejectedValueOnce(new Error("Test error"));
+    (os.deleteIndex as Mock).mockRejectedValueOnce(new Error("Test error"));
 
     await handler(event, null, callback);
 

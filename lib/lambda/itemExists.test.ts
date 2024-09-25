@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
 import { APIGatewayEvent } from "aws-lambda";
 import { handler } from "./itemExists";
 import { response } from "libs/handler-lib";
@@ -31,7 +31,7 @@ describe("Handler for checking if record exists", () => {
   });
 
   it("should return 200 and exists: true if record is found", async () => {
-    (os.getItem as vi.Mock).mockResolvedValueOnce({ _source: {} });
+    (os.getItem as Mock).mockResolvedValueOnce({ _source: {} });
 
     const event = {
       body: JSON.stringify({ id: "test-id" }),
@@ -46,7 +46,7 @@ describe("Handler for checking if record exists", () => {
   });
 
   it("should return 200 and exists: false if no record is found", async () => {
-    (os.getItem as vi.Mock).mockResolvedValueOnce({});
+    (os.getItem as Mock).mockResolvedValueOnce({});
 
     const event = {
       body: JSON.stringify({ id: "test-id" }),
@@ -61,7 +61,7 @@ describe("Handler for checking if record exists", () => {
   });
 
   it("should return 500 if an error occurs during processing", async () => {
-    (os.getItem as vi.Mock).mockRejectedValueOnce(new Error("Test error"));
+    (os.getItem as Mock).mockRejectedValueOnce(new Error("Test error"));
 
     const event = {
       body: JSON.stringify({ id: "test-id" }),

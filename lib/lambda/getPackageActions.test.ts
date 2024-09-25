@@ -46,8 +46,8 @@ describe("getPackageActions Handler", () => {
 
   it("should return 401 if not authorized to view resources from the state", async () => {
     const packageData = { found: true, _source: { state: "test-state" } };
-    (getPackage as vi.Mock).mockResolvedValueOnce(packageData);
-    (isAuthorizedToGetPackageActions as vi.Mock).mockResolvedValueOnce(false);
+    (getPackage as Mock).mockResolvedValueOnce(packageData);
+    (isAuthorizedToGetPackageActions as Mock).mockResolvedValueOnce(false);
 
     const event = {
       body: JSON.stringify({ id: "test-id" }),
@@ -65,11 +65,11 @@ describe("getPackageActions Handler", () => {
     const packageData = { found: true, _source: { state: "test-state" } };
     const userAttributes = { userId: "test-user", poolId: "test-pool" };
     const actions = ["action1", "action2"];
-    (getPackage as vi.Mock).mockResolvedValueOnce(packageData);
-    (isAuthorizedToGetPackageActions as vi.Mock).mockResolvedValueOnce(true);
-    (getAuthDetails as vi.Mock).mockReturnValueOnce(userAttributes);
-    (lookupUserAttributes as vi.Mock).mockResolvedValueOnce(userAttributes);
-    (getAvailableActions as vi.Mock).mockReturnValueOnce(actions);
+    (getPackage as Mock).mockResolvedValueOnce(packageData);
+    (isAuthorizedToGetPackageActions as Mock).mockResolvedValueOnce(true);
+    (getAuthDetails as Mock).mockReturnValueOnce(userAttributes);
+    (lookupUserAttributes as Mock).mockResolvedValueOnce(userAttributes);
+    (getAvailableActions as Mock).mockReturnValueOnce(actions);
 
     const event = {
       body: JSON.stringify({ id: "test-id" }),
@@ -84,7 +84,7 @@ describe("getPackageActions Handler", () => {
   });
 
   it("should handle errors during processing", async () => {
-    (getPackage as vi.Mock).mockRejectedValueOnce(new Error("Test error"));
+    (getPackage as Mock).mockRejectedValueOnce(new Error("Test error"));
 
     const event = {
       body: JSON.stringify({ id: "test-id" }),

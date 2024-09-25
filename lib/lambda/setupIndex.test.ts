@@ -70,7 +70,7 @@ describe("handler", () => {
   });
 
   it("should handle errors and return status 500", async () => {
-    (os.createIndex as vi.Mock).mockRejectedValueOnce(new Error("Test error"));
+    (os.createIndex as Mock).mockRejectedValueOnce(new Error("Test error"));
 
     await handler(mockEvent, null, mockCallback);
 

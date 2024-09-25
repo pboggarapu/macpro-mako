@@ -3,9 +3,9 @@ import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    globals: true,
-    environmentMatchGlobs: [["**/*.test.ts", "**/*.test.tsx"]],
-    setupFiles: ["./test/setup.ts"],
+    // globals: true,
+    // environmentMatchGlobs: [["**/*.test.ts", "**/*.test.tsx"]],
+    // setupFiles: ["./test/setup.ts"],
     coverage: {
       provider: "istanbul",
       reportsDirectory: join(__dirname, "coverage"),
@@ -26,9 +26,6 @@ export default defineConfig({
         "**/*/.eslintrc.{ts,js,cjs}",
         "**/*.config.{ts,js,cjs}",
         "test",
-        "**/*.spec.ts",
-        "**/node_modules/**",
-        "e2e/tests/**",
       ],
     },
     environment: "happy-dom",

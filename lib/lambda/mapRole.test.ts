@@ -34,7 +34,7 @@ describe("CloudFormation Custom Resource Handler", () => {
       RequestType: "Create",
     };
 
-    (os.mapRole as vi.Mock).mockResolvedValueOnce("Role mapped successfully");
+    (os.mapRole as Mock).mockResolvedValueOnce("Role mapped successfully");
 
     await handler(mockEvent, mockContext);
 
@@ -59,7 +59,7 @@ describe("CloudFormation Custom Resource Handler", () => {
       RequestType: "Update",
     };
 
-    (os.mapRole as vi.Mock).mockResolvedValueOnce("Role mapped successfully");
+    (os.mapRole as Mock).mockResolvedValueOnce("Role mapped successfully");
 
     await handler(mockEvent, mockContext);
 
@@ -102,7 +102,7 @@ describe("CloudFormation Custom Resource Handler", () => {
       RequestType: "Create",
     };
 
-    (os.mapRole as vi.Mock).mockRejectedValueOnce(new Error("Test error"));
+    (os.mapRole as Mock).mockRejectedValueOnce(new Error("Test error"));
 
     await handler(mockEvent, mockContext);
 

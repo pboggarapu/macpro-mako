@@ -98,7 +98,7 @@ describe("Lambda Handler", () => {
     };
 
     // Simulate an error in send function
-    (send as vi.Mock).mockRejectedValue(new Error("Test error"));
+    (send as Mock).mockRejectedValue(new Error("Test error"));
 
     await handler(event, null, callback);
 

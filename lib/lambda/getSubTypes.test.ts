@@ -31,7 +31,7 @@ describe("getSubTypes Handler", () => {
   });
 
   it("should return 400 if no subtypes are found", async () => {
-    (os.search as vi.Mock).mockResolvedValueOnce(null);
+    (os.search as Mock).mockResolvedValueOnce(null);
 
     const event = {
       body: JSON.stringify({
@@ -52,7 +52,7 @@ describe("getSubTypes Handler", () => {
     const mockResult = {
       hits: { hits: [{ _source: { name: "test-subtype" } }] },
     };
-    (os.search as vi.Mock).mockResolvedValueOnce(mockResult);
+    (os.search as Mock).mockResolvedValueOnce(mockResult);
 
     const event = {
       body: JSON.stringify({
@@ -70,7 +70,7 @@ describe("getSubTypes Handler", () => {
   });
 
   it("should return 500 if an error occurs during processing", async () => {
-    (os.search as vi.Mock).mockRejectedValueOnce(new Error("Test error"));
+    (os.search as Mock).mockRejectedValueOnce(new Error("Test error"));
 
     const event = {
       body: JSON.stringify({

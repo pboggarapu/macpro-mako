@@ -6,22 +6,17 @@ import {
   SecretsManagerClient,
   GetSecretValueCommand,
 } from "@aws-sdk/client-secrets-manager";
-import { fromEnv } from "@aws-sdk/credential-providers";
 
 const stage = process.env.STAGE_NAME || "main";
 const deploymentConfig = JSON.parse(
   (
-    await new SSMClient({
-      region: "us-east-1",
-      credentials: fromEnv(),
-    }).send(
+    await new SSMClient({ region: "us-east-1" }).send(
       new GetParameterCommand({
         Name: `/${process.env.PROJECT}/${stage}/deployment-config`,
       }),
     )
   ).Parameter!.Value!,
 );
-
 const password = (
   await new SecretsManagerClient({ region: "us-east-1" }).send(
     new GetSecretValueCommand({ SecretId: deploymentConfig.devPasswordArn }),
