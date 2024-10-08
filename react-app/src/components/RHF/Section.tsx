@@ -3,12 +3,18 @@ import { Section } from "shared-types";
 import { FormLabel } from "../Inputs";
 import { DependencyWrapper, RHFFormGroup } from ".";
 import { cn } from "@/utils";
+import { useState } from "react";
 
 export const RHFSection = <TFieldValues extends FieldValues>(props: {
   section: Section;
   formId: string;
   control: Control<TFieldValues>;
 }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  function toggleCollapse() {
+    setIsCollapsed(!isCollapsed);
+  }
+
   return (
     <DependencyWrapper {...props.section}>
       <div>
@@ -22,11 +28,18 @@ export const RHFSection = <TFieldValues extends FieldValues>(props: {
             }
           >
             <FormLabel className="font-bold">{props.section.title}</FormLabel>
+            <span onClick={toggleCollapse}>
+              Collapse button: {isCollapsed.toString()}
+            </span>
           </div>
         )}
         {props.section.form?.length > 0 && (
           <div
-            className={cn(props.section.sectionWrapperClassname, "px-8 py-6")}
+            className={cn(
+              props.section.sectionWrapperClassname,
+              "px-8 py-6",
+              isCollapsed ? "hidden" : "",
+            )}
           >
             {props.section.form.map((FORM, index) => (
               <RHFFormGroup
