@@ -27,10 +27,12 @@ export const RHFSection = <TFieldValues extends FieldValues>(props: {
                 : "bg-primary text-white text-3xl")
             }
           >
-            <FormLabel className="font-bold">{props.section.title}</FormLabel>
-            <span onClick={toggleCollapse}>
-              Collapse button: {isCollapsed.toString()}
-            </span>
+            <div className="flex flex-row justify-between items-center">
+              <FormLabel className="font-bold">{props.section.title}</FormLabel>
+              <div onClick={toggleCollapse} className="text-sm">
+                Collapse: {isCollapsed.toString()}
+              </div>
+            </div>
           </div>
         )}
         {props.section.form?.length > 0 && (
