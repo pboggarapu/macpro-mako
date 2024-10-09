@@ -4,6 +4,7 @@ import { FormLabel } from "../Inputs";
 import { DependencyWrapper, RHFFormGroup } from ".";
 import { cn } from "@/utils";
 import { useState } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
 export const RHFSection = <TFieldValues extends FieldValues>(props: {
   section: Section;
@@ -29,8 +30,27 @@ export const RHFSection = <TFieldValues extends FieldValues>(props: {
           >
             <div className="flex flex-row justify-between items-center">
               <FormLabel className="font-bold">{props.section.title}</FormLabel>
-              <div onClick={toggleCollapse} className="text-sm">
-                Collapse: {isCollapsed.toString()}
+              <div
+                onClick={toggleCollapse}
+                className="text-sm cursor-pointer font-bold"
+              >
+                {isCollapsed ? (
+                  <div className="flex flex-row items-center gap-2">
+                    <p>Expand</p>
+                    <ChevronUpIcon
+                      className="h-6"
+                      width={"100%"}
+                    ></ChevronUpIcon>
+                  </div>
+                ) : (
+                  <div className="flex flex-row items-center gap-2">
+                    <p>Collapse</p>
+                    <ChevronDownIcon
+                      className="h-6"
+                      width={"100%"}
+                    ></ChevronDownIcon>
+                  </div>
+                )}
               </div>
             </div>
           </div>
